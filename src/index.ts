@@ -3,7 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import {ApolloServer} from "@apollo/server";
 import {expressMiddleware} from "@apollo/server/express4";
-import {typeDefs, resolvers} from "./Graphql"
+import {typeDefs, resolvers} from "./graphql"
 
 dotenv.config();
 const app = express();
@@ -19,6 +19,7 @@ const apolloServer = async () => {
   app.use(cors());
   app.use(express.json());
   app.use(express.urlencoded({extended: true}));
+  //@ts-ignore
   app.use("/graphql", expressMiddleware(server));
 
   app.get("/", (req, res) => {
