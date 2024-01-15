@@ -48,6 +48,11 @@ export const resolvers = {
   Query: {
     getAllMovies: () => moviesData,
     getGenres: () => genres,
+    //@ts-ignore
+    getMovie (parent, args, context, info) {
+      const { id } = args;
+      return moviesData.find((a) => a.id == id)
+    }
   },
   Mutation: {
    
