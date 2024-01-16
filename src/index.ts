@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import {ApolloServer} from "@apollo/server";
 import {expressMiddleware} from "@apollo/server/express4";
 import {typeDefs, resolvers} from "./graphql"
+import dbInit from "./repository/db";
 
 dotenv.config();
 const app = express();
@@ -21,7 +22,7 @@ const apolloServer = async () => {
   app.use(express.urlencoded({extended: true}));
   //@ts-ignore
   app.use("/graphql", expressMiddleware(server));
-
+  dbInit()
   app.get("/", (req, res) => {
     res.send("Hello World!");
   });
