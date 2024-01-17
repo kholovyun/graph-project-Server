@@ -1,19 +1,24 @@
 import { MongoClient } from "mongodb";
+import mongoose, { Mongoose } from "mongoose";
 
-const url = "mongodb+srv://vlad:vlad@cluster0.3uboqj7.mongodb.net/?retryWrites=true&w=majority";
+const urlDb = "mongodb+srv://vlad:vlad@cluster0.3uboqj7.mongodb.net/graphDb?retryWrites=true&w=majority";
 
 
-const client = new MongoClient(url);
+const client = new MongoClient(urlDb);
 
-const dbInit = async() => {
-    try {
-      await client.connect();
-      console.log('Connected to the database');
-    } catch (error) {
-        console.log(error)
-    } finally {
-      await client.close();
+export default class MongoRep {
+    private client: Mongoose | null = null
+
+    public close = async(): Promise<void> => {
+          await mongoose.disconnect()
     } 
-  }
 
-  export default dbInit
+    public init = async():  Promise<void> => {
+        try {
+            this.client = await mongoose.connect(urlDb);
+            console.log('Mongo is connected successfully')
+        } catch (error) {
+            console.log(error)
+        }
+    }
+};

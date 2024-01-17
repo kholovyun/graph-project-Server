@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import {ApolloServer} from "@apollo/server";
 import {expressMiddleware} from "@apollo/server/express4";
 import {typeDefs, resolvers} from "./graphql"
-import dbInit from "./repository/db";
+import MongoRep from "./repository/db";
 
 dotenv.config();
 const app = express();
@@ -20,9 +20,8 @@ const apolloServer = async () => {
   app.use(cors());
   app.use(express.json());
   app.use(express.urlencoded({extended: true}));
-  //@ts-ignore
   app.use("/graphql", expressMiddleware(server));
-  dbInit()
+  new MongoRep().init()
   app.get("/", (req, res) => {
     res.send("Hello World!");
   });
