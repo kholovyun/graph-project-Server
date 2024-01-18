@@ -19,7 +19,7 @@ export class MovieRep {
             console.log(err.message)
         }
     }
-    async addMovie(title : string,poster: string, genre: any): Promise<boolean>{
+    async addMovie(title: string, poster: string, genre: any): Promise<boolean>{
         try {
             await MovieModel.create({title, poster, genre})
             return true

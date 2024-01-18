@@ -21,8 +21,8 @@ export const typeDefs = `
   }
 
   type Mutation {
-    addMovie(title: String!, poster: String!, genreId: ID!): Movie
-    updateMovie(id: ID!, title: String, poster: String, genreId: ID!): Movie
+    addMovie(title: String!, poster: String!, genre: ID!): Movie
+    updateMovie(id: ID!, title: String, poster: String, genres: ID!): Movie
     deleteMovie(id: ID!): Boolean
   }
 `;
@@ -45,7 +45,8 @@ export const resolvers = {
     }
   },
   Mutation: {
-    async addMovie (title : string,poster: string, genre: any) {
+    async addMovie (parent: any, args:{title: string, poster: string, genre: any}, context: any, info: any) {
+      const {title, poster, genre} = args
       await movieRep.addMovie(title, poster, genre) 
     }
   }
