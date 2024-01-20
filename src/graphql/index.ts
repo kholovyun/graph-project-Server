@@ -18,11 +18,11 @@ export const typeDefs = `
     getMovie(id: ID!): Movie
     getAllMovies: [Movie]
     getGenres: [Genre]
+    searchMovie(title: String!): [Movie]
   }
 
   type Mutation {
-    addMovie(title: String!, poster: String!, genre: ID!): Movie
-    updateMovie(id: ID!, title: String, poster: String, genres: ID!): Movie
+    addMovie(title: String!, poster: String!, genre: ID!): Movie 
     deleteMovie(id: ID!): Boolean
   }
 `;
@@ -41,6 +41,11 @@ export const resolvers = {
     async getMovie  (parent: any, args: {id: string}, context: any, info: any) {
       const { id } = args;
       const movie = await movieRep.getMovieById(id)
+      return movie
+    },
+    async searchMovie  (parent: any, args: {title: string}, context: any, info: any) {
+      const { title } = args;
+      const movie = await movieRep.searchMovieByTitle(title)
       return movie
     }
   },

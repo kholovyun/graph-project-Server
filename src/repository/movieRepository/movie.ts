@@ -29,6 +29,17 @@ export class MovieRep {
             return false 
         }
     }
+    async searchMovieByTitle(substring: string): Promise<any>{
+        try {
+            const escapedSubstring = substring.replace(/\s/g, '\\s');
+            const data = await MovieModel.find({ title: { $regex: escapedSubstring, $options: 'i' } }).exec();
+            return data
+        } catch (error: unknown) {
+            const err = error as Error
+            console.log(err)
+            return false 
+        }
+    }
 }
 const movieRep = new MovieRep()
 export default movieRep
